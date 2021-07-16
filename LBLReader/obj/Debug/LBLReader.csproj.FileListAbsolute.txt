@@ -36,3 +36,16 @@ C:\Proyectos\labelsdesigner\LBLReader\obj\Debug\LBLReader.exe
 C:\Proyectos\labelsdesigner\LBLReader\obj\Debug\LBLReader.pdb
 C:\Proyectos\labelsdesigner\LBLReader\obj\Debug\LBLReader.Parameters.BQ.resources
 C:\Proyectos\labelsdesigner\LBLReader\obj\Debug\LBLReader.Parameters.BC.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\obj\Debug\LBLReader.Parameters.BC.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\obj\Debug\LBLReader.Parameters.BQ.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET-Q16-AnyCPU.dll
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET.Core.dll
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET-Q16-AnyCPU.xml
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET.Core.xml
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET.SystemDrawing.dll
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Magick.NET.SystemDrawing.xml
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\obj\Debug\LBLReader.Parameters.Line.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\obj\Debug\LBLReader.Parameters.Alphanumeric.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\obj\Debug\LBLReader.Parameters.Bitmapped.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Newtonsoft.Json.dll
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LBLReader\bin\Debug\Newtonsoft.Json.xml

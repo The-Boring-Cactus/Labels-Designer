@@ -1,5 +1,7 @@
 ﻿using AForge.Imaging;
 using AForge.Imaging.Filters;
+using ImageMagick;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +23,7 @@ namespace LBLReader
         private float VRes = 96.0f;
         private int RulerHeight;
         string dpmm = "8dpmm";
+        string currentFile = "";
         private Font TheFont = new Font("Times New Roman", 10, FontStyle.Bold);
         public Form1()
         {
@@ -82,13 +85,16 @@ namespace LBLReader
                     int R = color.R;
                     int G = color.G;
                     int B = color.B;
-
-                    double  lum = 0.2126 * R + 0.7152 * G + 0.0722 * B;
-
-                    if (lum < 10)
+                    int A = color.A;
+                    if (A > 0)
                     {
-                        allBlack.Add(new Point(x,y));
-                        
+                        double lum = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+
+                        if (lum < 10)
+                        {
+                            allBlack.Add(new Point(x, y));
+
+                        }
                     }
                 }
             }
@@ -151,7 +157,13 @@ namespace LBLReader
             {
                 var response = (HttpWebResponse)request.GetResponse();
                 var responseStream = response.GetResponseStream();
-                var image = System.Drawing.Image.FromStream(responseStream);
+                //var image = System.Drawing.Image.FromStream(responseStream);
+
+                MagickImage img = new MagickImage(responseStream);
+                img.ColorFuzz = new Percentage(90);
+                img.Transparent(MagickColors.White);
+                var image = img.ToBitmap();
+
                 var tmp = Process(image);
 
                 Crop cropFilter = new Crop(new Rectangle(tmp[0], tmp[1], tmp[2]- tmp[0], tmp[3]- tmp[1]));
@@ -161,6 +173,9 @@ namespace LBLReader
                 Bitmap croppedImage = cropFilter.Apply(image2);
                 responseStream.Close();
                 // pictureBox1.Image = croppedImage;
+
+                
+
                 return croppedImage;
                 
             }
@@ -191,15 +206,27 @@ namespace LBLReader
                 labelItem.Visible = true;
                 labelItem.Location = new Point(100, 100);
                 labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
                 labelItem.Height = qrcode.Height;
-                labelItem.Width = qrcode.Width;                
+                labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
             }
         }
 
-        
+        private void LabelItem_Remove(object sender, RemoveEvent e)
+        {
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if(item.uuid == e.id)
+                {
+                    LabelDesigner.Controls.Remove(item);
+                }
+            }
+        }
+
         private void DrawRuler(Graphics g)
         {
             g.DrawRectangle(Pens.White, ClientRectangle);
@@ -342,8 +369,10 @@ namespace LBLReader
                 labelItem.Visible = true;
                 labelItem.Location = new Point(100, 100);
                 labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
                 labelItem.Height = qrcode.Height;
                 labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
@@ -374,21 +403,56 @@ namespace LBLReader
         {
             openFileDialog1.FileName = "";
             openFileDialog1.ShowDialog();
-            string file = openFileDialog1.FileName;
-            var bitmap = new Bitmap(file);
-            string zpl_clean = ZplImageConverter.GetZPLIIImage(bitmap, 10, 10);
-            string zpl_i = "^XA" + zpl_clean + "^XZ";
+            string path = openFileDialog1.FileName;
+
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://api.labelary.com/v1/graphics");
+            string str1 = "----WebKitBoundaryString";
+
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "multipart/form-data; boundary=" + str1;
+            httpWebRequest.KeepAlive = true;
+            httpWebRequest.Credentials = CredentialCache.DefaultCredentials;
+            MemoryStream memoryStream = new MemoryStream();
+            StreamWriter streamWriter = new StreamWriter((Stream)memoryStream);
+            streamWriter.Write("\r\n--" + str1 + "\r\n");
+            streamWriter.Write("Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: image/png\r\n\r\n", (object)"file", (object)Path.GetFileName(path), (object)Path.GetExtension(path));
+            streamWriter.Flush();
+            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            byte[] buffer = new byte[1024];
+            int count;
+            while ((count = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                memoryStream.Write(buffer, 0, count);
+            fileStream.Close();
+            streamWriter.Write("\r\n--" + str1 + "--\r\n");
+            streamWriter.Flush();
+            httpWebRequest.ContentLength = memoryStream.Length;
+            using (Stream requestStream = httpWebRequest.GetRequestStream())
+                memoryStream.WriteTo(requestStream);
+            memoryStream.Close();
+            string str2 = "";
+            try
+            {
+                str2 = new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd();
+            }
+            catch
+            {
+            }
 
 
-            System.Drawing.Image qrcode = getImage(zpl_i);
+
+
+
+            System.Drawing.Image qrcode = getImage(str2);
             if (qrcode != null)
             {
                 LabelItem labelItem = new LabelItem(qrcode);
                 labelItem.Visible = true;
                 labelItem.Location = new Point(100, 100);
-                labelItem.zpl = zpl_clean.Replace("^FO10,10","");
+                labelItem.zpl = str2.Replace("^XA^FO0,0", "").Replace("^XZ", "");
+                labelItem.zpl_gen = str2;
                 labelItem.Height = qrcode.Height;
                 labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
@@ -403,6 +467,183 @@ namespace LBLReader
         private void button3_MouseLeave(object sender, EventArgs e)
         {
             statusLabel.Text = "";
+        }
+
+        private void button4_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "Vertical Line";
+        }
+
+        private void button4_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
+        }
+
+        private void button5_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "Horizontal Line";
+        }
+
+        private void button5_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Parameters.Line line = new Parameters.Line();
+            line.Text = "Vertical Line";
+            line.ShowDialog();
+            string zpl = string.Format(
+                @"^XA
+^FO5,5
+^GB1,{0},{1}^FS
+^XZ", line.data.Text, line.thickness.Text);
+            string zpl_clean = string.Format(
+                @"^GB1,{0},{1}^FS", line.data.Text, line.thickness.Text);
+            System.Drawing.Image qrcode = getImage(zpl);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Parameters.Line line = new Parameters.Line();
+            line.Text = "Horizontal Line";
+            line.ShowDialog();
+            string zpl = string.Format(
+                @"^XA
+^FO5,5
+^GB{0},1,{1}^FS
+^XZ", line.data.Text, line.thickness.Text);
+            string zpl_clean = string.Format(
+                @"^GB{0},1,{1}^FS", line.data.Text, line.thickness.Text);
+            System.Drawing.Image qrcode = getImage(zpl);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void button6_MouseHover(object sender, EventArgs e)
+        {
+            //Alphanumeric
+            statusLabel.Text = "Alphanumeric Data";
+        }
+
+        private void button6_MouseLeave(object sender, EventArgs e)
+        {
+            //
+            statusLabel.Text = "";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Parameters.Alphanumeric alphanumeric = new Parameters.Alphanumeric();
+            alphanumeric.ShowDialog();
+
+            string zpl = string.Format(
+                @"^XA
+^FO5,5
+^CF{0},{1},{2}
+^FD{3}^FS
+^XZ", alphanumeric.font.Text, alphanumeric.cheight.Text, alphanumeric.cwidth.Text, alphanumeric.data.Text);
+            string zpl_clean = string.Format(
+                @"^CF{0},{1},{2}
+^FD{3}^FS", alphanumeric.font.Text, alphanumeric.cheight.Text, alphanumeric.cwidth.Text, alphanumeric.data.Text);
+            System.Drawing.Image qrcode = getImage(zpl);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void button7_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "Bitmapped Font";
+        }
+
+        private void button7_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Parameters.Bitmapped alphanumeric = new Parameters.Bitmapped();
+            alphanumeric.ShowDialog();
+
+            string zpl = string.Format(
+                @"^XA
+^FO5,5
+^A{0}{1},{2},{3}
+^FD{4}^FS
+^XZ", alphanumeric.font.Text, alphanumeric.orientation.Text, alphanumeric.cheight.Text, alphanumeric.cwidth.Text, alphanumeric.data.Text);
+            string zpl_clean = string.Format(
+                @"^A{0}{1},{2},{3}
+^FD{4}^FS", alphanumeric.font.Text, alphanumeric.orientation.Text, alphanumeric.cheight.Text, alphanumeric.cwidth.Text, alphanumeric.data.Text);
+            System.Drawing.Image qrcode = getImage(zpl);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
+                labelItem.zpl_gen = zpl;
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Remove += LabelItem_Remove;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void newToolStripButton_Click(object sender, EventArgs e)
+        {
+            currentFile = "";
+            LabelDesigner.Controls.Clear();
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+
+                string outputJSON = JsonConvert.SerializeObject(item);
+            }
         }
     }
 }

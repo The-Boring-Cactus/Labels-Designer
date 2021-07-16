@@ -10,27 +10,31 @@ using System.Windows.Forms;
 
 namespace LBLReader
 {
+    [Serializable]
     public partial class LabelItem : UserControl
     {
         private Image qrcode;
 
-        //public LabelItem()
-        //{
-        //    InitializeComponent();
-        //}
+        public event EventHandler<RemoveEvent> Remove;
 
         bool selected = false;
         private Point MouseDownLocation;
-
+        public string uuid = "";
         public string zpl = "";
+
+        public string zpl_gen = "";
 
         public LabelItem(Image qrcode)
         {
             InitializeComponent();
             this.qrcode = qrcode;
             this.itempic.Image = this.qrcode;
-        }
 
+            Guid g = Guid.NewGuid();
+            uuid = g.ToString();
+        }
+        
+        
         private void LabelItem_MouseEnter(object sender, EventArgs e)
         {
             this.BorderStyle = BorderStyle.Fixed3D;
@@ -59,7 +63,19 @@ namespace LBLReader
                 MouseDownLocation = e.Location;
                 selected = true;
             }
-           
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                this.BringToFront();
+            }
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Middle)
+            {
+                if(Remove!=null)
+                {
+                    Remove.Invoke(this, new RemoveEvent(uuid));
+                }
+            }
 
         }
 

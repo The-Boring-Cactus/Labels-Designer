@@ -51,7 +51,7 @@ namespace LBLReader
                 var image = System.Drawing.Image.FromStream(responseStream);
                 var tmp = Process(image);
 
-                Crop cropFilter = new Crop(new Rectangle(0, 0, tmp.X, tmp.Y));
+                Crop cropFilter = new Crop(new Rectangle(tmp[0], tmp[1], tmp[2] - tmp[0], tmp[3] - tmp[1]));
 
                 Bitmap image2 = new Bitmap(image);
 
@@ -65,15 +65,14 @@ namespace LBLReader
                 Console.WriteLine("Error: {0}", e.Status);
             }
         }
-        public Point Process(System.Drawing.Image image)
+        public int[] Process(System.Drawing.Image image)
         {
             Bitmap b = new Bitmap(image);
            
             LockBitmap lockBitmap = new LockBitmap(b);
             lockBitmap.LockBits();
-            int X = 0;
-            int Y = 0;
-
+            
+            List<Point> allBlack = new List<Point>();
             for (int y = 0; y < lockBitmap.Height; y++)
             {
                 for (int x = 0; x < lockBitmap.Width; x++)
@@ -88,19 +87,18 @@ namespace LBLReader
 
                     if (lum < 10)
                     {
-                        if(X < x)
-                        {
-                            X = x;
-                        }
-                        if (Y < y)
-                        {
-                            Y = y;
-                        }
+                        allBlack.Add(new Point(x,y));
+                        
                     }
                 }
             }
-            Point p = new Point(X,Y);
-            return p;
+            int minX = (from p in allBlack orderby p.X select p).First().X;
+            int minY = (from p in allBlack orderby p.Y select p).First().Y;
+            int maxX = (from p in allBlack orderby p.X select p).Last().X;
+            int maxY = (from p in allBlack orderby p.Y select p).Last().Y; ;
+
+            
+            return new int[] {minX, minY, maxX,  maxY };
         }
         public int ppIn()
         {
@@ -156,7 +154,7 @@ namespace LBLReader
                 var image = System.Drawing.Image.FromStream(responseStream);
                 var tmp = Process(image);
 
-                Crop cropFilter = new Crop(new Rectangle(0, 0, tmp.X, tmp.Y));
+                Crop cropFilter = new Crop(new Rectangle(tmp[0], tmp[1], tmp[2]- tmp[0], tmp[3]- tmp[1]));
 
                 Bitmap image2 = new Bitmap(image);
 
@@ -175,19 +173,26 @@ namespace LBLReader
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            string zpl = @"^XA
-                ^FO0,0
-                ^BQN,2,10
-                ^FDMM,AAC-42^FS
-                ^XZ";
+            Parameters.BQ bq = new Parameters.BQ();
+            bq.ShowDialog();
+            string zpl =string.Format(
+                @"^XA
+^FO0,0
+^BQN,2,{0},{1},{2}
+^FD{3}^FS
+^XZ", bq.factor.Text, bq.correction.Text, bq.mask.Text,bq.data.Text);
+            string zpl_clean = string.Format(
+                @"^BQN,2,{0},{1},{2}
+^FD{3}^FS", bq.factor.Text, bq.correction.Text, bq.mask.Text, bq.data.Text);
             System.Drawing.Image qrcode = getImage(zpl);
             if (qrcode != null)
             {
                 LabelItem labelItem = new LabelItem(qrcode);
                 labelItem.Visible = true;
-                labelItem.Location = new Point(1, 1);
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
                 labelItem.Height = qrcode.Height;
-                labelItem.Width = qrcode.Width;
+                labelItem.Width = qrcode.Width;                
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
@@ -315,6 +320,89 @@ namespace LBLReader
             HRes = VRes;
             splitContainer3.Panel1.Invalidate();
             splitContainer4.Panel2.Invalidate();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Parameters.BC bq = new Parameters.BC();
+            bq.ShowDialog();
+            string zpl = string.Format(
+                @"^XA
+^FO5,60
+^BY3^BC{0},{1},{2},{3},{4},{5}
+^FD{6}^FS
+^XZ", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text);
+            string zpl_clean = string.Format(
+                @"^BY3^BC{0},{1},{2},{3},{4},{5}
+^FD{6}^FS", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text);
+            System.Drawing.Image qrcode = getImage(zpl);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean;
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "QR CODE";
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
+        }
+
+        private void button2_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "CODE 128 BAR CODE";
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.FileName = "";
+            openFileDialog1.ShowDialog();
+            string file = openFileDialog1.FileName;
+            var bitmap = new Bitmap(file);
+            string zpl_clean = ZplImageConverter.GetZPLIIImage(bitmap, 10, 10);
+            string zpl_i = "^XA" + zpl_clean + "^XZ";
+
+
+            System.Drawing.Image qrcode = getImage(zpl_i);
+            if (qrcode != null)
+            {
+                LabelItem labelItem = new LabelItem(qrcode);
+                labelItem.Visible = true;
+                labelItem.Location = new Point(100, 100);
+                labelItem.zpl = zpl_clean.Replace("^FO10,10","");
+                labelItem.Height = qrcode.Height;
+                labelItem.Width = qrcode.Width;
+                labelItem.Show();
+
+                LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void button3_MouseHover(object sender, EventArgs e)
+        {
+            statusLabel.Text = "Add Image";
+        }
+
+        private void button3_MouseLeave(object sender, EventArgs e)
+        {
+            statusLabel.Text = "";
         }
     }
 }

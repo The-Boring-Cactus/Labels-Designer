@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -168,6 +169,7 @@ namespace LabelDesigner
                 labelItem.Height = qrcode.Height;
                 labelItem.Width = qrcode.Width;
                 labelItem.Remove += LabelItem_Remove;
+                labelItem.PositionUpdate += LabelItem_PositionUpdate;
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
@@ -603,6 +605,7 @@ namespace LabelDesigner
                         labelItem.Height = qrcode.Height;
                         labelItem.Width = qrcode.Width;
                         labelItem.Remove += LabelItem_Remove;
+                        labelItem.PositionUpdate += LabelItem_PositionUpdate;
                         labelItem.Show();
 
                         LabelDesigner.Controls.Add(labelItem);
@@ -610,6 +613,18 @@ namespace LabelDesigner
                 }
             }
            
+        }
+
+        private void LabelItem_PositionUpdate(object sender, PositionEvent e)
+        {
+            if(e.X=="")
+            {
+                statusLabel.Text = "";
+            }
+            else
+            {
+                statusLabel.Text = string.Format("X: {0}, Y: {1}", e.X, e.Y);
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -831,6 +846,26 @@ namespace LabelDesigner
                 @"^B7{0},{1},{2},{3},{4},{5}^FD{6}^FS", pdf417BarCode.corientation.Text, pdf417BarCode.cheight.Text, pdf417BarCode.csecurity.Text, pdf417BarCode.ccolumns.Text, pdf417BarCode.crows.Text, pdf417BarCode.ctruncate.Text, pdf417BarCode.data.Text);
 
             CreateLabel(zpl, zpl_clean);
+        }
+
+        private void printToolStripButton1_Click(object sender, EventArgs e)
+        {
+            StringBuilder code = new StringBuilder();
+            code.Append("^XA\n");
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                code.Append(string.Format("\n^FO{0},{1}\n", item.Location.X, item.Location.Y));
+                code.Append(item.zpl);
+                code.Append("\n");
+            }
+            code.Append("\n^XZ\n");
+            string s = code.ToString();
+            PrintDialog pd = new PrintDialog();
+            pd.PrinterSettings = new PrinterSettings();
+            if (DialogResult.OK == pd.ShowDialog(this))
+            {
+                RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, s);
+            }
         }
     }
 }

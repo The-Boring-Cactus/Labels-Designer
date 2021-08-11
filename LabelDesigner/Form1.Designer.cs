@@ -70,6 +70,8 @@ namespace LabelDesigner
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.printToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -428,7 +430,9 @@ namespace LabelDesigner
             this.toolStripLabel3,
             this.toolStripTextBox2,
             this.toolStripSeparator1,
-            this.printToolStripButton});
+            this.printToolStripButton,
+            this.toolStripSeparator3,
+            this.printToolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -507,6 +511,7 @@ namespace LabelDesigner
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox1.Text = "2";
@@ -522,6 +527,7 @@ namespace LabelDesigner
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox2.Text = "3";
@@ -579,6 +585,21 @@ namespace LabelDesigner
             // openFileDialog2
             // 
             this.openFileDialog2.Filter = "JSON Labels|*.json";
+            // 
+            // printToolStripButton1
+            // 
+            this.printToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.printToolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton1.Image")));
+            this.printToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton1.Name = "printToolStripButton1";
+            this.printToolStripButton1.Size = new System.Drawing.Size(23, 30);
+            this.printToolStripButton1.Text = "&Print";
+            this.printToolStripButton1.Click += new System.EventHandler(this.printToolStripButton1_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 33);
             // 
             // Form1
             // 
@@ -665,6 +686,8 @@ namespace LabelDesigner
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton printToolStripButton1;
     }
 }
 

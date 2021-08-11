@@ -155,8 +155,10 @@
     <Compile Include="Parameters\PDF417BarCode.Designer.cs">
       <DependentUpon>PDF417BarCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="PositionEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawPrinterHelper.cs" />
     <Compile Include="RemoveEvent.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Viewer.cs">

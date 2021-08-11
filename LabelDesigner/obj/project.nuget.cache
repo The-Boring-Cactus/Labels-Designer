@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ftu3xsiW2ZB5nZpIyBGsfbFSsp4YLO7I8UQwmXK07Y1i1W0ihLU8QBynBYm5ET0E+KZ+GAKpaJmet/kEtTeoww==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ricardo.rodriguez\\source\\repos\\LBLReader\\LabelDesigner\\LabelDesigner.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ricardo.rodriguez\\.nuget\\packages\\ilmerge\\3.0.41\\ilmerge.3.0.41.nupkg.sha512"
+  ],
+  "logs": []
+}

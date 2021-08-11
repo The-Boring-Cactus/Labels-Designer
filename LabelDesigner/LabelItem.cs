@@ -17,6 +17,8 @@ namespace LabelDesigner
         public Boolean remove = false;
         public event EventHandler<RemoveEvent> Remove;
 
+        public event EventHandler<PositionEvent> PositionUpdate;
+
         bool selected = false;
         private Point MouseDownLocation;
         public string uuid = "";
@@ -62,6 +64,10 @@ namespace LabelDesigner
             {
                 MouseDownLocation = e.Location;
                 selected = true;
+                if(PositionUpdate!=null)
+                {
+                    PositionUpdate.Invoke(this, new PositionEvent(this.Left.ToString(), this.Top.ToString()));
+                }
             }
 
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -83,6 +89,10 @@ namespace LabelDesigner
         {
 
             selected = false;
+            if (PositionUpdate != null)
+            {
+                PositionUpdate.Invoke(this, new PositionEvent("", ""));
+            }
         }
 
         private void itempic_MouseMove(object sender, MouseEventArgs e)
@@ -91,6 +101,10 @@ namespace LabelDesigner
             {
                 this.Left = e.X + this.Left - MouseDownLocation.X;
                 this.Top = e.Y + this.Top - MouseDownLocation.Y;
+                if (PositionUpdate != null)
+                {
+                    PositionUpdate.Invoke(this, new PositionEvent(this.Left.ToString(), this.Top.ToString()));
+                }
             }
         }
     }

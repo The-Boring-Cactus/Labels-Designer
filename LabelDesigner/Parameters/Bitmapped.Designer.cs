@@ -156,9 +156,9 @@ namespace LabelDesigner.Parameters
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(12, 51);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 13);
+            this.label8.Size = new System.Drawing.Size(58, 13);
             this.label8.TabIndex = 29;
-            this.label8.Text = "Font name";
+            this.label8.Text = "Orientation";
             // 
             // orientation
             // 

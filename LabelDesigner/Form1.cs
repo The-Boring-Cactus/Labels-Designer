@@ -68,13 +68,21 @@ namespace LabelDesigner
                     }
                 }
             }
-            int minX = (from p in allBlack orderby p.X select p).First().X;
-            int minY = (from p in allBlack orderby p.Y select p).First().Y;
-            int maxX = (from p in allBlack orderby p.X select p).Last().X;
-            int maxY = (from p in allBlack orderby p.Y select p).Last().Y; ;
+            try
+            {
+                int minX = (from p in allBlack orderby p.X select p).First().X;
+                int minY = (from p in allBlack orderby p.Y select p).First().Y;
+                int maxX = (from p in allBlack orderby p.X select p).Last().X;
+                int maxY = (from p in allBlack orderby p.Y select p).Last().Y;
+                return new int[] { minX, minY, maxX, maxY };
+            }
+            catch
+            {
+                return new int[] { 0, 0, 0, 0 };
+            }
 
             
-            return new int[] {minX, minY, maxX,  maxY };
+            
         }
         public int ppIn()
         {
@@ -135,6 +143,9 @@ namespace LabelDesigner
                 var image = img.ToBitmap();
 
                 var tmp = Process(image);
+
+                if (tmp[0] + tmp[1] + tmp[2]  + tmp[3] == 0)
+                    return null;
 
                 Crop cropFilter = new Crop(new Rectangle(tmp[0], tmp[1], tmp[2]- tmp[0], tmp[3]- tmp[1]));
 
@@ -665,20 +676,24 @@ namespace LabelDesigner
 
         private void LabelDesigner_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            string x = toolStripTextBox1.Text;
-            string y = toolStripTextBox2.Text;
-            int w = int.Parse(x);
-            int h = int.Parse(y);
+            try
+            {
+                Graphics g = e.Graphics;
+                string x = toolStripTextBox1.Text;
+                string y = toolStripTextBox2.Text;
+                int w = int.Parse(x);
+                int h = int.Parse(y);
 
-            float H_pix = HRes * h;
-            float W_pix = HRes * w;
+                float H_pix = HRes * h;
+                float W_pix = HRes * w;
 
-            g.DrawLine(Pens.Red, 0, H_pix, W_pix, H_pix);
+                g.DrawLine(Pens.Red, 0, H_pix, W_pix, H_pix);
 
-            g.DrawLine(Pens.Red, W_pix, 0, W_pix, H_pix);
+                g.DrawLine(Pens.Red, W_pix, 0, W_pix, H_pix);
 
-            g.Dispose();
+                g.Dispose();
+            }
+            catch { }
 
         }
 

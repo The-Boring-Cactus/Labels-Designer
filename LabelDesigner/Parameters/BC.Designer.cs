@@ -55,12 +55,15 @@
             this.cwidth = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.bcR = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 70);
+            this.label1.Location = new System.Drawing.Point(12, 137);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 0;
@@ -75,7 +78,7 @@
             "R",
             "I",
             "B"});
-            this.orientation.Location = new System.Drawing.Point(129, 70);
+            this.orientation.Location = new System.Drawing.Point(129, 137);
             this.orientation.Name = "orientation";
             this.orientation.Size = new System.Drawing.Size(121, 21);
             this.orientation.TabIndex = 1;
@@ -84,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(256, 70);
+            this.label2.Location = new System.Drawing.Point(256, 137);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(185, 65);
             this.label2.TabIndex = 2;
@@ -94,7 +97,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 166);
+            this.label3.Location = new System.Drawing.Point(12, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(111, 13);
             this.label3.TabIndex = 3;
@@ -103,7 +106,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(256, 166);
+            this.label4.Location = new System.Drawing.Point(256, 102);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 13);
             this.label4.TabIndex = 5;
@@ -167,7 +170,7 @@
             // 
             // bcheight
             // 
-            this.bcheight.Location = new System.Drawing.Point(129, 163);
+            this.bcheight.Location = new System.Drawing.Point(129, 99);
             this.bcheight.Name = "bcheight";
             this.bcheight.Size = new System.Drawing.Size(121, 20);
             this.bcheight.TabIndex = 12;
@@ -292,11 +295,40 @@
             this.label15.TabIndex = 22;
             this.label15.Text = "Bar code Width (dots)";
             // 
+            // bcR
+            // 
+            this.bcR.Location = new System.Drawing.Point(128, 63);
+            this.bcR.Name = "bcR";
+            this.bcR.Size = new System.Drawing.Size(121, 20);
+            this.bcR.TabIndex = 27;
+            this.bcR.Text = "3";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(255, 66);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(179, 26);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "Values: 2.0 to 3.0, in 0.1 increments \r\nDefault: 3.0";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(11, 66);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(97, 26);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "Wide bar to narrow\r\nbar width ratio";
+            // 
             // BC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 524);
+            this.Controls.Add(this.bcR);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.cwidth);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label15);
@@ -361,5 +393,8 @@
         public System.Windows.Forms.TextBox cwidth;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
+        public System.Windows.Forms.TextBox bcR;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
     }
 }

@@ -65,13 +65,13 @@ namespace LabelDesigner
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.printToolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.printToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -390,6 +390,7 @@ namespace LabelDesigner
             this.LabelDesigner.Size = new System.Drawing.Size(1966, 1966);
             this.LabelDesigner.TabIndex = 0;
             this.LabelDesigner.Paint += new System.Windows.Forms.PaintEventHandler(this.LabelDesigner_Paint);
+            this.LabelDesigner.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LabelDesigner_MouseClick);
             // 
             // splitContainer5
             // 
@@ -554,6 +555,21 @@ namespace LabelDesigner
             this.printToolStripButton.MouseLeave += new System.EventHandler(this.printToolStripButton_MouseLeave);
             this.printToolStripButton.MouseHover += new System.EventHandler(this.printToolStripButton_MouseHover);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 33);
+            // 
+            // printToolStripButton1
+            // 
+            this.printToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.printToolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton1.Image")));
+            this.printToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton1.Name = "printToolStripButton1";
+            this.printToolStripButton1.Size = new System.Drawing.Size(23, 30);
+            this.printToolStripButton1.Text = "&Print";
+            this.printToolStripButton1.Click += new System.EventHandler(this.printToolStripButton1_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.White;
@@ -585,21 +601,6 @@ namespace LabelDesigner
             // openFileDialog2
             // 
             this.openFileDialog2.Filter = "JSON Labels|*.json";
-            // 
-            // printToolStripButton1
-            // 
-            this.printToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton1.Image")));
-            this.printToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton1.Name = "printToolStripButton1";
-            this.printToolStripButton1.Size = new System.Drawing.Size(23, 30);
-            this.printToolStripButton1.Text = "&Print";
-            this.printToolStripButton1.Click += new System.EventHandler(this.printToolStripButton1_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 33);
             // 
             // Form1
             // 

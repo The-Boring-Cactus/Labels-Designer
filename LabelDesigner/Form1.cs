@@ -357,14 +357,14 @@ namespace LabelDesigner
             string zpl = string.Format(
                 @"^XA
 ^FO5,60
-^BY{7}
-^BC{0},{1},{2},{3},{4},{5}
+^BY{7},{8},{1}
+^BC{0},,{2},{3},{4},{5}
 ^FD{6}^FS
-^XZ", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text, bq.cwidth.Text);
+^XZ", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text, bq.cwidth.Text, bq.bcR.Text);
             string zpl_clean = string.Format(
-                @"^BY{7}
-^BC{0},{1},{2},{3},{4},{5}
-^FD{6}^FS", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text, bq.cwidth.Text);
+                @"^BY{7},{8},{1}
+^BC{0},,{2},{3},{4},{5}
+^FD{6}^FS", bq.orientation.Text, bq.bcheight.Text, bq.printline.Text, bq.lineavobe.Text, bq.ucc.Text, bq.mode.Text, bq.data.Text, bq.cwidth.Text, bq.bcR.Text);
             CreateLabel(zpl, zpl_clean);
         }
 
@@ -881,6 +881,11 @@ namespace LabelDesigner
             {
                 RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, s);
             }
+        }
+
+        private void LabelDesigner_MouseClick(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("clic elem");
         }
     }
 }

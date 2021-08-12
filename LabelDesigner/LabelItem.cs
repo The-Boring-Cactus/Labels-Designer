@@ -19,6 +19,8 @@ namespace LabelDesigner
 
         public event EventHandler<PositionEvent> PositionUpdate;
 
+        public bool isSelected = false;
+
         bool selected = false;
         private Point MouseDownLocation;
         public string uuid = "";
@@ -39,22 +41,29 @@ namespace LabelDesigner
         
         private void LabelItem_MouseEnter(object sender, EventArgs e)
         {
-            this.BorderStyle = BorderStyle.Fixed3D;
+            //this.BorderStyle = BorderStyle.FixedSingle;
+
+            this.BackColor = Color.Beige;
         }
 
         private void LabelItem_MouseLeave(object sender, EventArgs e)
         {
-            this.BorderStyle = BorderStyle.None;
+            //this.BorderStyle = BorderStyle.None;
+            if (!isSelected)
+                this.BackColor = Color.Transparent;
         }
 
         private void itempic_MouseEnter(object sender, EventArgs e)
         {
-            this.BorderStyle = BorderStyle.Fixed3D;
+            //this.BorderStyle = BorderStyle.FixedSingle;
+            this.BackColor = Color.Beige;
         }
 
         private void itempic_MouseLeave(object sender, EventArgs e)
         {
-            this.BorderStyle = BorderStyle.None;
+            //this.BorderStyle = BorderStyle.None;
+            if(!isSelected)
+                this.BackColor = Color.Transparent;
         }
 
        

@@ -4,6 +4,7 @@ using ImageMagick;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -25,6 +26,7 @@ namespace LabelDesigner
         private int RulerHeight=10;
         string dpmm = "8dpmm";
         string currentFile = "";
+        private List<string> selectedItems = new List<string>();
         private Font TheFont = new Font("Times New Roman", 10, FontStyle.Bold);
         public Form1()
         {
@@ -35,6 +37,8 @@ namespace LabelDesigner
             splitContainer2.Height = RulerHeight * (int)VRes;
             splitContainer2.Width = RulerHeight * (int)VRes;
             var pn1 = panel1;
+            menualign.Visible = false;
+            menudist.Visible = false;
         }
 
         
@@ -180,10 +184,35 @@ namespace LabelDesigner
                 labelItem.Height = qrcode.Height;
                 labelItem.Width = qrcode.Width;
                 labelItem.Remove += LabelItem_Remove;
+                labelItem.WasSelected += LabelItem_WasSelected;
                 labelItem.PositionUpdate += LabelItem_PositionUpdate;
                 labelItem.Show();
 
                 LabelDesigner.Controls.Add(labelItem);
+            }
+        }
+
+        private void LabelItem_WasSelected(object sender, SelectEvent e)
+        {
+            if(e.action== SelAction.Add)
+            {
+                if(!selectedItems.Contains(e.id))
+                    selectedItems.Add(e.id);                
+            }
+            if(e.action== SelAction.Remove)
+            {
+                selectedItems.Remove(e.id);
+
+            }
+            if (selectedItems.Count > 1)
+            {
+                menualign.Visible = true;
+                menudist.Visible = true;
+            }
+            else
+            {
+                menualign.Visible = false;
+                menudist.Visible = false;
             }
         }
 
@@ -616,6 +645,7 @@ namespace LabelDesigner
                         labelItem.Height = qrcode.Height;
                         labelItem.Width = qrcode.Width;
                         labelItem.Remove += LabelItem_Remove;
+                        labelItem.WasSelected += LabelItem_WasSelected;
                         labelItem.PositionUpdate += LabelItem_PositionUpdate;
                         labelItem.Show();
 
@@ -642,13 +672,21 @@ namespace LabelDesigner
         {
             if(e.Control)
             {
-                statusLabel.Text = "Delete on click";
+                statusLabel.Text = "Click to Delete";
                 foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
                 {
                     item.remove = true;
                 }
             }
             
+            if(e.Shift)
+            {
+                statusLabel.Text = "Click to Select";
+                foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+                {
+                    item.toselect = true;
+                }
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -660,6 +698,14 @@ namespace LabelDesigner
                 foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
                 {
                     item.remove = false;
+                }
+            }
+            if (!e.Shift)
+            {
+                statusLabel.Text = "";
+                foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+                {
+                    item.toselect = false;
                 }
             }
         }
@@ -883,9 +929,207 @@ namespace LabelDesigner
             }
         }
 
+       
         private void LabelDesigner_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("clic elem");
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                item.resetSelect();
+                menualign.Visible = false;
+                menudist.Visible = false;
+                
+            }
+            selectedItems = new List<string>();
+        }
+
+        private void leftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int _left = 10000;
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    if(item.Left< _left)
+                    {
+                        _left = item.Left;
+                    }
+                }
+
+            }
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Left = _left;
+                }
+
+            }
+        }
+
+        private void rightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int _left = 0;
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    if ((item.Left + item.Width)> _left)
+                    {
+                        _left = item.Left + item.Width;
+                    }
+                }
+
+            }
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Left = _left - item.Width;
+                }
+
+            }
+        }
+
+        private void centerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<int> centers = new List<int>();
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+
+                    centers.Add(item.Left + item.Width / 2);
+                    
+                }
+
+            }
+
+            int average = (int)centers.Average();
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Left = average -(item.Width/2);
+                }
+
+            }
+        }
+
+        private void horizontalCenterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<int> centers = new List<int>();
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+
+                    centers.Add(item.Top + item.Height / 2);
+
+                }
+
+            }
+
+            int average = (int)centers.Average();
+
+            
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Top = average - (item.Height / 2);
+                   
+                }
+
+            }
+        }
+
+        private void topToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int _top = 1000000;
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    if (item.Top < _top)
+                    {
+                        _top = item.Top;
+                    }
+                }
+
+            }
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Top = _top;
+                }
+
+            }
+        }
+
+        private void bottomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int _top = 0;
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    if ((item.Top+item.Height) >= _top)
+                    {
+                        _top = item.Top + item.Height;
+                    }
+                }
+
+            }
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+                    item.Top = _top - item.Height;
+                }
+
+            }
+        }
+
+        private void verticalDistributionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<ItemLbl> itemLbls = new List<ItemLbl>();
+            
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+
+                    itemLbls.Add(new ItemLbl() { Name = item.uuid, Height = item.Height, Top = item.Top });
+                }
+
+            }
+
+            var _topITem = itemLbls.OrderBy(z => z.Top).ToArray().FirstOrDefault();
+            var _lastItem = itemLbls.OrderBy(z => z.Top).ToArray().LastOrDefault();
+
+            var realSize = _topITem.Top + _lastItem.Top + _lastItem.Height;
+
+            var realFill = itemLbls.Select(z => z.Height).ToArray().Sum();
+
+            var realGap = (realSize - realFill) / itemLbls.Count;
+
+
+
+
+        }
+        class ItemLbl
+        {
+            public string Name { get; set; }
+            public int Top { get; set; }
+            public int Height { get; set; }
         }
     }
 }

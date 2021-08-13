@@ -67,11 +67,22 @@ namespace LabelDesigner
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.printToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.menualign = new System.Windows.Forms.ToolStripDropDownButton();
+            this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.centerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menudist = new System.Windows.Forms.ToolStripDropDownButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.horizontalCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verticalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.horizontalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -433,7 +444,10 @@ namespace LabelDesigner
             this.toolStripSeparator1,
             this.printToolStripButton,
             this.toolStripSeparator3,
-            this.printToolStripButton1});
+            this.printToolStripButton1,
+            this.toolStripSeparator4,
+            this.menualign,
+            this.menudist});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -512,7 +526,6 @@ namespace LabelDesigner
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox1.Text = "2";
@@ -528,7 +541,6 @@ namespace LabelDesigner
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox2.Text = "3";
@@ -545,8 +557,7 @@ namespace LabelDesigner
             // printToolStripButton
             // 
             this.printToolStripButton.AutoSize = false;
-            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton.Image = global::LabelDesigner.Properties.Resources.zpl2;
+            this.printToolStripButton.Image = global::LabelDesigner.Properties.Resources.zpl;
             this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printToolStripButton.Name = "printToolStripButton";
             this.printToolStripButton.Size = new System.Drawing.Size(30, 30);
@@ -562,13 +573,78 @@ namespace LabelDesigner
             // 
             // printToolStripButton1
             // 
-            this.printToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.printToolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton1.Image")));
             this.printToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printToolStripButton1.Name = "printToolStripButton1";
-            this.printToolStripButton1.Size = new System.Drawing.Size(23, 30);
+            this.printToolStripButton1.Size = new System.Drawing.Size(52, 30);
             this.printToolStripButton1.Text = "&Print";
             this.printToolStripButton1.Click += new System.EventHandler(this.printToolStripButton1_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 33);
+            // 
+            // menualign
+            // 
+            this.menualign.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menualign.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.leftToolStripMenuItem,
+            this.rightToolStripMenuItem,
+            this.centerToolStripMenuItem,
+            this.horizontalCenterToolStripMenuItem,
+            this.topToolStripMenuItem,
+            this.bottomToolStripMenuItem});
+            this.menualign.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menualign.Name = "menualign";
+            this.menualign.Size = new System.Drawing.Size(48, 30);
+            this.menualign.Text = "Align";
+            // 
+            // leftToolStripMenuItem
+            // 
+            this.leftToolStripMenuItem.Name = "leftToolStripMenuItem";
+            this.leftToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.leftToolStripMenuItem.Text = "Left";
+            this.leftToolStripMenuItem.Click += new System.EventHandler(this.leftToolStripMenuItem_Click);
+            // 
+            // rightToolStripMenuItem
+            // 
+            this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
+            this.rightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rightToolStripMenuItem.Text = "Right";
+            this.rightToolStripMenuItem.Click += new System.EventHandler(this.rightToolStripMenuItem_Click);
+            // 
+            // centerToolStripMenuItem
+            // 
+            this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
+            this.centerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.centerToolStripMenuItem.Text = "Vertical Center";
+            this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerToolStripMenuItem_Click);
+            // 
+            // topToolStripMenuItem
+            // 
+            this.topToolStripMenuItem.Name = "topToolStripMenuItem";
+            this.topToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.topToolStripMenuItem.Text = "Top";
+            this.topToolStripMenuItem.Click += new System.EventHandler(this.topToolStripMenuItem_Click);
+            // 
+            // bottomToolStripMenuItem
+            // 
+            this.bottomToolStripMenuItem.Name = "bottomToolStripMenuItem";
+            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bottomToolStripMenuItem.Text = "Bottom";
+            this.bottomToolStripMenuItem.Click += new System.EventHandler(this.bottomToolStripMenuItem_Click);
+            // 
+            // menudist
+            // 
+            this.menudist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menudist.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.verticalDistributionToolStripMenuItem,
+            this.horizontalDistributionToolStripMenuItem});
+            this.menudist.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menudist.Name = "menudist";
+            this.menudist.Size = new System.Drawing.Size(71, 30);
+            this.menudist.Text = "Distribute";
             // 
             // statusStrip1
             // 
@@ -601,6 +677,26 @@ namespace LabelDesigner
             // openFileDialog2
             // 
             this.openFileDialog2.Filter = "JSON Labels|*.json";
+            // 
+            // horizontalCenterToolStripMenuItem
+            // 
+            this.horizontalCenterToolStripMenuItem.Name = "horizontalCenterToolStripMenuItem";
+            this.horizontalCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.horizontalCenterToolStripMenuItem.Text = "Horizontal Center";
+            this.horizontalCenterToolStripMenuItem.Click += new System.EventHandler(this.horizontalCenterToolStripMenuItem_Click);
+            // 
+            // verticalDistributionToolStripMenuItem
+            // 
+            this.verticalDistributionToolStripMenuItem.Name = "verticalDistributionToolStripMenuItem";
+            this.verticalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.verticalDistributionToolStripMenuItem.Text = "Vertical Distribution";
+            this.verticalDistributionToolStripMenuItem.Click += new System.EventHandler(this.verticalDistributionToolStripMenuItem_Click);
+            // 
+            // horizontalDistributionToolStripMenuItem
+            // 
+            this.horizontalDistributionToolStripMenuItem.Name = "horizontalDistributionToolStripMenuItem";
+            this.horizontalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.horizontalDistributionToolStripMenuItem.Text = "Horizontal Distribution";
             // 
             // Form1
             // 
@@ -689,6 +785,17 @@ namespace LabelDesigner
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton printToolStripButton1;
+        private System.Windows.Forms.ToolStripDropDownButton menualign;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem leftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem centerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton menudist;
+        private System.Windows.Forms.ToolStripMenuItem topToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bottomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem horizontalCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verticalDistributionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem horizontalDistributionToolStripMenuItem;
     }
 }
 

@@ -15,10 +15,11 @@ namespace LabelDesigner
     {
         private Image qrcode;
         public Boolean remove = false;
+        public Boolean toselect = false;
         public event EventHandler<RemoveEvent> Remove;
 
         public event EventHandler<PositionEvent> PositionUpdate;
-
+        public event EventHandler<SelectEvent> WasSelected;
         public bool isSelected = false;
 
         bool selected = false;
@@ -42,8 +43,8 @@ namespace LabelDesigner
         private void LabelItem_MouseEnter(object sender, EventArgs e)
         {
             //this.BorderStyle = BorderStyle.FixedSingle;
-
-            this.BackColor = Color.Beige;
+            if (!isSelected)
+                this.BackColor = Color.Beige;
         }
 
         private void LabelItem_MouseLeave(object sender, EventArgs e)
@@ -56,7 +57,8 @@ namespace LabelDesigner
         private void itempic_MouseEnter(object sender, EventArgs e)
         {
             //this.BorderStyle = BorderStyle.FixedSingle;
-            this.BackColor = Color.Beige;
+            if (!isSelected)
+                this.BackColor = Color.Beige;
         }
 
         private void itempic_MouseLeave(object sender, EventArgs e)
@@ -66,6 +68,12 @@ namespace LabelDesigner
                 this.BackColor = Color.Transparent;
         }
 
+        public void resetSelect()
+        {
+            this.isSelected = false;
+            this.toselect = false;
+            this.BackColor = Color.Transparent;
+        }
        
         private void itempic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -77,20 +85,42 @@ namespace LabelDesigner
                 {
                     PositionUpdate.Invoke(this, new PositionEvent(this.Left.ToString(), this.Top.ToString()));
                 }
+                if(toselect)
+                {
+                    if (!this.isSelected)
+                    {
+                        this.isSelected = true;
+                        this.BackColor = Color.GreenYellow;
+                        if (WasSelected != null)
+                        {
+                            WasSelected.Invoke(this, new SelectEvent(uuid, SelAction.Add));
+                        }
+                    }
+                    else
+                    {
+                        this.isSelected = false;
+                        this.BackColor = Color.Transparent;
+                        if (WasSelected != null)
+                        {
+                            WasSelected.Invoke(this, new SelectEvent(uuid, SelAction.Remove));
+                        }
+                    }
+                }
+                if(remove)
+                {
+                    if (Remove != null)
+                    {
+                        Remove.Invoke(this, new RemoveEvent(uuid));
+                    }
+                }
             }
-
+           
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 this.BringToFront();
             }
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left && remove)
-            {
-                if(Remove!=null)
-                {
-                    Remove.Invoke(this, new RemoveEvent(uuid));
-                }
-            }
+            
 
         }
 

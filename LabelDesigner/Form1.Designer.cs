@@ -72,17 +72,17 @@ namespace LabelDesigner
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.horizontalCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menudist = new System.Windows.Forms.ToolStripDropDownButton();
+            this.verticalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.horizontalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.horizontalCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.verticalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.horizontalDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -526,6 +526,7 @@ namespace LabelDesigner
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox1.Text = "2";
@@ -541,6 +542,7 @@ namespace LabelDesigner
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(50, 33);
             this.toolStripTextBox2.Text = "3";
@@ -621,6 +623,13 @@ namespace LabelDesigner
             this.centerToolStripMenuItem.Text = "Vertical Center";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerToolStripMenuItem_Click);
             // 
+            // horizontalCenterToolStripMenuItem
+            // 
+            this.horizontalCenterToolStripMenuItem.Name = "horizontalCenterToolStripMenuItem";
+            this.horizontalCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.horizontalCenterToolStripMenuItem.Text = "Horizontal Center";
+            this.horizontalCenterToolStripMenuItem.Click += new System.EventHandler(this.horizontalCenterToolStripMenuItem_Click);
+            // 
             // topToolStripMenuItem
             // 
             this.topToolStripMenuItem.Name = "topToolStripMenuItem";
@@ -645,6 +654,20 @@ namespace LabelDesigner
             this.menudist.Name = "menudist";
             this.menudist.Size = new System.Drawing.Size(71, 30);
             this.menudist.Text = "Distribute";
+            // 
+            // verticalDistributionToolStripMenuItem
+            // 
+            this.verticalDistributionToolStripMenuItem.Name = "verticalDistributionToolStripMenuItem";
+            this.verticalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.verticalDistributionToolStripMenuItem.Text = "Vertical Distribution";
+            this.verticalDistributionToolStripMenuItem.Click += new System.EventHandler(this.verticalDistributionToolStripMenuItem_Click);
+            // 
+            // horizontalDistributionToolStripMenuItem
+            // 
+            this.horizontalDistributionToolStripMenuItem.Name = "horizontalDistributionToolStripMenuItem";
+            this.horizontalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.horizontalDistributionToolStripMenuItem.Text = "Horizontal Distribution";
+            this.horizontalDistributionToolStripMenuItem.Click += new System.EventHandler(this.horizontalDistributionToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -677,26 +700,6 @@ namespace LabelDesigner
             // openFileDialog2
             // 
             this.openFileDialog2.Filter = "JSON Labels|*.json";
-            // 
-            // horizontalCenterToolStripMenuItem
-            // 
-            this.horizontalCenterToolStripMenuItem.Name = "horizontalCenterToolStripMenuItem";
-            this.horizontalCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.horizontalCenterToolStripMenuItem.Text = "Horizontal Center";
-            this.horizontalCenterToolStripMenuItem.Click += new System.EventHandler(this.horizontalCenterToolStripMenuItem_Click);
-            // 
-            // verticalDistributionToolStripMenuItem
-            // 
-            this.verticalDistributionToolStripMenuItem.Name = "verticalDistributionToolStripMenuItem";
-            this.verticalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.verticalDistributionToolStripMenuItem.Text = "Vertical Distribution";
-            this.verticalDistributionToolStripMenuItem.Click += new System.EventHandler(this.verticalDistributionToolStripMenuItem_Click);
-            // 
-            // horizontalDistributionToolStripMenuItem
-            // 
-            this.horizontalDistributionToolStripMenuItem.Name = "horizontalDistributionToolStripMenuItem";
-            this.horizontalDistributionToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.horizontalDistributionToolStripMenuItem.Text = "Horizontal Distribution";
             // 
             // Form1
             // 

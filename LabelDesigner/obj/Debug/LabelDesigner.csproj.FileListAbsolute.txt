@@ -54,7 +54,6 @@ C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\bin\Debug\Magick
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\bin\Debug\Magick.NET.Core.xml
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\bin\Debug\Magick.NET.SystemDrawing.xml
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\bin\Debug\Newtonsoft.Json.xml
-C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.csproj.AssemblyReference.cache
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.Form1.resources
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.ImageResizer.resources
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.LabelItem.resources
@@ -76,3 +75,4 @@ C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelD
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.csproj.CopyComplete
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.exe
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.pdb
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.csproj.AssemblyReference.cache

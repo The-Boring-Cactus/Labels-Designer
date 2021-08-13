@@ -37,8 +37,8 @@ namespace LabelDesigner
             splitContainer2.Height = RulerHeight * (int)VRes;
             splitContainer2.Width = RulerHeight * (int)VRes;
             var pn1 = panel1;
-            menualign.Visible = false;
-            menudist.Visible = false;
+            //menualign.Visible = false;
+            //menudist.Visible = false;
         }
 
         
@@ -204,16 +204,16 @@ namespace LabelDesigner
                 selectedItems.Remove(e.id);
 
             }
-            if (selectedItems.Count > 1)
-            {
-                menualign.Visible = true;
-                menudist.Visible = true;
-            }
-            else
-            {
-                menualign.Visible = false;
-                menudist.Visible = false;
-            }
+            //if (selectedItems.Count > 1)
+            //{
+            //    menualign.Visible = true;
+            //    menudist.Visible = true;
+            //}
+            //else
+            //{
+            //    menualign.Visible = false;
+            //    menudist.Visible = false;
+            //}
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -935,8 +935,8 @@ namespace LabelDesigner
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
                 item.resetSelect();
-                menualign.Visible = false;
-                menudist.Visible = false;
+                //menualign.Visible = false;
+                //menudist.Visible = false;
                 
             }
             selectedItems = new List<string>();
@@ -944,6 +944,8 @@ namespace LabelDesigner
 
         private void leftToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             int _left = 10000;
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -969,6 +971,8 @@ namespace LabelDesigner
 
         private void rightToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             int _left = 0;
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -994,6 +998,8 @@ namespace LabelDesigner
 
         private void centerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             List<int> centers = new List<int>();
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -1020,6 +1026,8 @@ namespace LabelDesigner
 
         private void horizontalCenterToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             List<int> centers = new List<int>();
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -1049,6 +1057,8 @@ namespace LabelDesigner
 
         private void topToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             int _top = 1000000;
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -1074,6 +1084,8 @@ namespace LabelDesigner
 
         private void bottomToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             int _top = 0;
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -1099,8 +1111,11 @@ namespace LabelDesigner
 
         private void verticalDistributionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectedItems.Count < 2)
+                return;
             List<ItemLbl> itemLbls = new List<ItemLbl>();
-            
+
+            List<LabelItem> controlLbls = new List<LabelItem>();
 
             foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
             {
@@ -1108,20 +1123,31 @@ namespace LabelDesigner
                 {
 
                     itemLbls.Add(new ItemLbl() { Name = item.uuid, Height = item.Height, Top = item.Top });
+                    controlLbls.Add(item);
                 }
 
             }
 
-            var _topITem = itemLbls.OrderBy(z => z.Top).ToArray().FirstOrDefault();
-            var _lastItem = itemLbls.OrderBy(z => z.Top).ToArray().LastOrDefault();
+            var allItem = itemLbls.OrderBy(z => z.Top).ToArray();
 
-            var realSize = _topITem.Top + _lastItem.Top + _lastItem.Height;
+            var _topITem = allItem.FirstOrDefault();
+            var _lastItem = allItem.LastOrDefault();
+
+            var realSize = (_lastItem.Top + _lastItem.Height) - _topITem.Top;
 
             var realFill = itemLbls.Select(z => z.Height).ToArray().Sum();
 
-            var realGap = (realSize - realFill) / itemLbls.Count;
+            var realGap = (realSize - realFill) / (itemLbls.Count-1);
 
+            int newTop = _topITem.Top;
+            
+            foreach (var item in allItem)
+            {
+                var realItem =controlLbls.Where(z => z.uuid == item.Name).FirstOrDefault();
+                realItem.Top = newTop;
+                newTop += item.Height + realGap;            
 
+            }
 
 
         }
@@ -1130,6 +1156,55 @@ namespace LabelDesigner
             public string Name { get; set; }
             public int Top { get; set; }
             public int Height { get; set; }
+        }
+
+        class ItemLblV
+        {
+            public string Name { get; set; }
+            public int Left { get; set; }
+            public int Width { get; set; }
+        }
+
+        private void horizontalDistributionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selectedItems.Count < 2)
+                return;
+            List<ItemLblV> itemLbls = new List<ItemLblV>();
+
+            List<LabelItem> controlLbls = new List<LabelItem>();
+
+            foreach (LabelItem item in LabelDesigner.Controls.OfType<LabelItem>())
+            {
+                if (selectedItems.Contains(item.uuid))
+                {
+
+                    itemLbls.Add(new ItemLblV() { Name = item.uuid, Width = item.Width, Left = item.Left });
+                    controlLbls.Add(item);
+                }
+
+            }
+
+            var allItem = itemLbls.OrderBy(z => z.Left).ToArray();
+
+            var _topITem = allItem.FirstOrDefault();
+            var _lastItem = allItem.LastOrDefault();
+
+            var realSize = (_lastItem.Left + _lastItem.Width) - _topITem.Left;
+
+            var realFill = itemLbls.Select(z => z.Width).ToArray().Sum();
+
+            var realGap = (realSize - realFill) / (itemLbls.Count - 1);
+
+            int newTop = _topITem.Left;
+
+            foreach (var item in allItem)
+            {
+                var realItem = controlLbls.Where(z => z.uuid == item.Name).FirstOrDefault();
+                realItem.Left = newTop;
+                newTop += item.Width + realGap;
+
+            }
+
         }
     }
 }

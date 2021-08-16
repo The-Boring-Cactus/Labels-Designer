@@ -1206,5 +1206,17 @@ namespace LabelDesigner
             }
 
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            AboutBox1 aboutBox1 = new AboutBox1();
+            aboutBox1.ShowDialog();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            Form2 help = new Form2();
+            help.ShowDialog();
+        }
     }
 }

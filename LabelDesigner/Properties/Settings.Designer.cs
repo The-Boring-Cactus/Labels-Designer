@@ -8,21 +8,52 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace LabelDesigner.Properties
-{
+namespace LabelDesigner.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<html><head>
+
+</head><body id=""tinymce"" class=""mce-content-body ""><p><!-- #######  YAY, I AM THE SOURCE EDITOR! #########--></p>
+<h1 style=""color: #5e9ca0;"">Help</h1>
+<h2 style=""color: #2e6c80;"">Delete Items:</h2>
+<p>Press ctrl+Left Click</p>
+<h2 style=""color: #2e6c80;"">Select Items:</h2>
+<p>Press Shift+Left Click, to Unselect click again</p>
+<h2 style=""color: #2e6c80;"">Bring to Front:</h2>
+<p>Press Right Click</p>
+<h2 style=""color: #2e6c80;"">Move Item:</h2>
+<p>Click and drag the item to move, it will display the curren position</p>
+<h2 style=""color: #2e6c80;"">See ZPL Code:</h2>
+<p>Press ""ZPL"" button</p>
+<h2 style=""color: #2e6c80;"">Print to Printer:</h2>
+<p>Press Printer button</p>
+<h2 style=""color: #2e6c80;"">Align and Distribute:</h2>
+<p>Select the items and select the action from menu Align and Distribute</p>
+<h2 style=""color: #2e6c80;"">Unselect Items:</h2>
+<p>Click on the main canvas</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body></html>")]
+        public string help {
+            get {
+                return ((string)(this["help"]));
+            }
+            set {
+                this["help"] = value;
             }
         }
     }

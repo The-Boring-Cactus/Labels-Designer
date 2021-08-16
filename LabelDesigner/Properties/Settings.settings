@@ -1,7 +1,31 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LabelDesigner.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="help" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;html&gt;&lt;head&gt;
+
+&lt;/head&gt;&lt;body id="tinymce" class="mce-content-body "&gt;&lt;p&gt;&lt;!-- #######  YAY, I AM THE SOURCE EDITOR! #########--&gt;&lt;/p&gt;
+&lt;h1 style="color: #5e9ca0;"&gt;Help&lt;/h1&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Delete Items:&lt;/h2&gt;
+&lt;p&gt;Press ctrl+Left Click&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Select Items:&lt;/h2&gt;
+&lt;p&gt;Press Shift+Left Click, to Unselect click again&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Bring to Front:&lt;/h2&gt;
+&lt;p&gt;Press Right Click&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Move Item:&lt;/h2&gt;
+&lt;p&gt;Click and drag the item to move, it will display the curren position&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;See ZPL Code:&lt;/h2&gt;
+&lt;p&gt;Press "ZPL" button&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Print to Printer:&lt;/h2&gt;
+&lt;p&gt;Press Printer button&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Align and Distribute:&lt;/h2&gt;
+&lt;p&gt;Select the items and select the action from menu Align and Distribute&lt;/p&gt;
+&lt;h2 style="color: #2e6c80;"&gt;Unselect Items:&lt;/h2&gt;
+&lt;p&gt;Click on the main canvas&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

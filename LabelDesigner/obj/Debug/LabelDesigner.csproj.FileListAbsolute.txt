@@ -76,3 +76,5 @@ C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelD
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.exe
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.pdb
 C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.csproj.AssemblyReference.cache
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.AboutBox1.resources
+C:\Users\ricardo.rodriguez\source\repos\LBLReader\LabelDesigner\obj\Debug\LabelDesigner.Form2.resources

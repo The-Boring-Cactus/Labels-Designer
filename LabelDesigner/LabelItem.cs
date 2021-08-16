@@ -44,7 +44,7 @@ namespace LabelDesigner
         {
             //this.BorderStyle = BorderStyle.FixedSingle;
             if (!isSelected)
-                this.BackColor = Color.Beige;
+                this.BackColor = Color.Orange;
         }
 
         private void LabelItem_MouseLeave(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace LabelDesigner
         {
             //this.BorderStyle = BorderStyle.FixedSingle;
             if (!isSelected)
-                this.BackColor = Color.Beige;
+                this.BackColor = Color.Orange;
         }
 
         private void itempic_MouseLeave(object sender, EventArgs e)
